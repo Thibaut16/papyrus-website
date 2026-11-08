@@ -19,8 +19,34 @@ import ManageFees from './pages/admin/ManageFees';
 import ManagePrograms from './pages/admin/ManagePrograms';
 import ManageAdmissions from './pages/admin/ManageAdmissions';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useEffect } from 'react';
 
 export default function App() {
+  
+  // Ce useEffect active les animations d'apparition au défilement
+  useEffect(() => {
+    // On attend un petit peu que React ait fini de charger la page
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Optionnel : on arrête d'observer une fois que l'élément est visible
+            observer.unobserve(entry.target); 
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const elements = document.querySelectorAll('.reveal');
+      elements.forEach((el) => observer.observe(el));
+
+      // Nettoyage
+      return () => observer.disconnect();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="app">
       <Navbar />
