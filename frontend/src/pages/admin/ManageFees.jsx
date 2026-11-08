@@ -1,0 +1,1 @@
+export default function ManageFees() { return <div className="section"><h2>Gérer les frais</h2></div>; }

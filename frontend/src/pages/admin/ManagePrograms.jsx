@@ -1,0 +1,1 @@
+export default function ManagePrograms() { return <div className="section"><h2>Gérer les filières</h2></div>; }

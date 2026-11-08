@@ -1,0 +1,1 @@
+export default function ManageNews() { return <div className="section"><h2>Gérer les actualités</h2></div>; }
