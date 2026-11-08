@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "programs": "Filières",
+    "admissions": "Admissions",
+    "fees": "Frais de scolarité",
+    "advantages": "Avantages",
+    "gallery": "Galerie",
+    "news": "Actualités",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "PAPYRUS Bilingual High School",
+    "subtitle": "Excellence, bilinguisme et avenir professionnel à Douala",
+    "discover": "Découvrir notre établissement",
+    "enroll": "Préinscription"
+  },
+  "footer": {
+    "quickLinks": "Liens rapides",
+    "followUs": "Suivez-nous",
+    "rights": "Tous droits réservés."
+  }
+}
