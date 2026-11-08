@@ -9,7 +9,7 @@ export default function Navbar() {
     <nav className="navbar">
       <Link to="/" className="logo">
         {/* Remplacer par le chemin de votre logo */}
-        <img src="src/assets/logo.jpg" alt="Logo Papyrus" className="logo-img" />
+        <img src="src/assets/logo.png" alt="Logo Papyrus" className="logo-img" />
         <span>Papyrus <span className="text-rouge">Bilingual High School</span></span>
       </Link>
       <nav>
