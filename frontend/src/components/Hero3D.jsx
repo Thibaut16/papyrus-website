@@ -1,35 +1,46 @@
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Float, ContactShadows } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Float } from '@react-three/drei';
 import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 
-function Livre3D() {
-  const group = useRef();
-  
-  // Animation de rotation douce
-  useFrame((state) => {
-    if (group.current) {
-      group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.5;
+function Globe() {
+  const globeRef = useRef();
+  const ringRef = useRef();
+
+  // Animation de rotation
+  useFrame((state, delta) => {
+    if (globeRef.current) globeRef.current.rotation.y += delta * 0.2;
+    if (ringRef.current) {
+      ringRef.current.rotation.z += delta * 0.1;
+      ringRef.current.rotation.x += delta * 0.05;
     }
   });
 
   return (
-    <group ref={group} scale={1.2} position={[0, -0.5, 0]}>
-      {/* Couverture du livre (Rouge) */}
-      <mesh position={[0, 0, 0.1]}>
-        <boxGeometry args={[2, 2.8, 0.1]} />
-        <meshStandardMaterial color="#c1121f" roughness={0.4} metalness={0.2} />
+    <group scale={1.5}>
+      {/* La sphère principale avec un effet filaire (Wireframe) */}
+      <mesh ref={globeRef}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial 
+          color="#1e3a8a" // Bleu clair
+          wireframe={true} 
+          transparent 
+          opacity={0.3} 
+        />
       </mesh>
       
-      {/* Pages du livre (Blanc cassé) */}
-      <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[1.9, 2.7, 0.15]} />
-        <meshStandardMaterial color="#f5f5f5" roughness={0.8} />
+      {/* Une sphère intérieure solide pour donner du volume */}
+      <mesh>
+        <sphereGeometry args={[0.98, 32, 32]} />
+        <meshStandardMaterial 
+          color="#0a1f44" // Bleu nuit
+          roughness={0.8}
+        />
       </mesh>
 
-      {/* Tranche du livre (Dorée pour le premium) */}
-      <mesh position={[0, -1.4, 0]}>
-        <boxGeometry args={[2, 0.1, 0.25]} />
+      {/* Anneau doré autour (effet satellite/orbite) */}
+      <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.4, 0.02, 16, 100]} />
         <meshStandardMaterial color="#d4af37" metalness={0.8} roughness={0.2} />
       </mesh>
     </group>
@@ -38,22 +49,17 @@ function Livre3D() {
 
 export default function Hero3D() {
   return (
-    // La classe "hero-3d-container" nous permettra de le cacher sur mobile
-    <div className="hero-3d-container" style={{ height: '350px', width: '100%', marginTop: '2rem' }}>
-      <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[5, 10, 5]} intensity={1.5} castShadow />
-        <spotLight position={[-5, 5, 5]} intensity={1} />
+    <div className="hero-3d-container" style={{ height: '400px', width: '100%', marginTop: '1rem' }}>
+      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={1.5} color="#ffffff" />
+        <pointLight position={[-10, -10, -5]} intensity={1} color="#c1121f" /> {/* Lumière rouge subtile */}
         
-        {/* On fait flotter le livre */}
         <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
-          <Livre3D />
+          <Globe />
         </Float>
         
-        {/* Ombre au sol pour l'effet de réalisme */}
-        <ContactShadows position={[0, -2, 0]} opacity={0.4} scale={10} blur={2} far={4} />
-        
-        <OrbitControls enableZoom={false} enablePan={false} />
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
       </Canvas>
     </div>
   );
