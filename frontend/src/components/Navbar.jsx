@@ -4,9 +4,14 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar() {
   const { t } = useLanguage();
+  
   return (
     <nav className="navbar">
-      <Link to="/" className="logo">PAPYRUS <span>BHS</span></Link>
+      <Link to="/" className="logo">
+        {/* Remplacer par le chemin de votre logo */}
+        <img src="src/assets/logo.jpg" alt="Logo Papyrus" className="logo-img" />
+        <span>Papyrus <span className="text-rouge">Bilingual High School</span></span>
+      </Link>
       <nav>
         <Link to="/">{t('nav.home')}</Link>
         <Link to="/about">{t('nav.about')}</Link>

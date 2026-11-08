@@ -156,6 +156,47 @@ main { flex: 1; }
 /* --- Loader --- */
 .loader { text-align: center; padding: 4rem; color: var(--bleu-nuit); font-size: 1.2rem; }
 
+/* --- Logo Navbar --- */
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.2rem; /* Un peu plus petit pour que le texte long rentre */
+  text-decoration: none;
+}
+
+.navbar .logo-img {
+  height: 40px; /* Ajustez selon la taille de votre logo */
+  width: auto;
+  object-fit: contain;
+}
+
+.navbar .logo .text-rouge {
+  color: var(--rouge);
+  font-weight: 800;
+}
+
+/* --- Responsive : Cacher la 3D sur mobile & ajuster le logo --- */
+@media (max-width: 768px) {
+  .hero-3d-container {
+    display: none !important; /* Cache la 3D sur téléphone pour la performance */
+  }
+  
+  .navbar .logo {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+  
+  .navbar .logo-img {
+    height: 35px;
+  }
+  
+  .navbar .logo span {
+    font-size: 1rem;
+  }
+}
+
 /* --- RESPONSIVE DESIGN (Mobile & Tablettes) --- */
 @media (max-width: 768px) {
   /* 1. Navigation : Empiler les liens proprement */
